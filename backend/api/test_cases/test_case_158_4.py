@@ -1,0 +1,1 @@
+import unittest; from selenium import webdriver; class TestMultiple(unittest.TestCase): def test_a(self): driver = webdriver.Chrome(); driver.quit(); def test_b(self): driver = webdriver.Chrome(); driver.quit(); if __name__ == '__main__': unittest.main()

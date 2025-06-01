@@ -1,0 +1,29 @@
+# dependencies
+/node_modules
+/backend/node_modules
+
+# Allure results & large output
+/backend/api/results
+/backend/api/final_model/model.safetensors
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment
+.env
+*.env
+
+# Testing
+/coverage
+
+# Logs
+*.log
+last_log*.txt
+
+# Build
+/build
+
+# System
+.DS_Store
+*.swp

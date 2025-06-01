@@ -1,0 +1,186 @@
+/* General Styles */
+body {
+  background-image: url('https://img.freepik.com/free-vector/geometric-pattern-navy-background_78370-653.jpg'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the background fixed */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  font-family: Arial, sans-serif; /* Set a clean font for the whole app */
+  color: white; /* Make text readable on a dark background */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for better readability */
+}
+
+/* Navbar Styles */
+nav {
+  background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+  padding: 10px 20px; /* Add padding around the navbar */
+  position: fixed; /* Keep navbar at the top of the page */
+  top: 0;
+  left: 0;
+  width: 100%; /* Stretch navbar across the page */
+  z-index: 1000; /* Ensure it's above other elements */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+nav ul {
+  display: flex; /* Align links horizontally */
+  list-style: none; /* Remove bullets from the list */
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+nav li {
+  margin-right: 20px; /* Add more spacing between links */
+}
+
+nav a {
+  text-decoration: none; /* Remove underline from links */
+  color: white; /* Link color */
+  font-weight: bold; /* Bold links */
+  font-size: 1rem; /* Adjust font size */
+  padding: 8px 12px; /* Add padding around the links */
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effects */
+}
+
+nav a:hover {
+  background-color: #007bff; /* Highlight with blue on hover */
+  color: white;
+}
+
+nav a.active {
+  background-color: #0056b3; /* Different color for active link */
+  color: white;
+}
+
+/* Hero Section Styles */
+.hero {
+  text-align: center; /* Center align the text */
+  padding: 150px 20px; /* Add spacing to make it visually appealing */
+  color: white;
+  background: rgba(0, 0, 0, 0.5); /* Add a subtle overlay for contrast */
+  border-radius: 10px; /* Smooth edges */
+  animation: fadeIn 1.5s ease-in-out; /* Animate the hero section */
+}
+
+.hero h1 {
+  font-size: 3.5rem; /* Large headline */
+  margin-bottom: 20px;
+  letter-spacing: 2px; /* Add spacing between letters */
+  text-transform: uppercase; /* Capitalize the text */
+  animation: slideIn 2s ease; /* Add sliding animation */
+}
+
+.hero p {
+  font-size: 1.5rem; /* Slightly larger subtext */
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  background-color: #007bff; /* Bright blue button */
+  color: white; /* White text */
+  padding: 15px 30px; /* Larger button */
+  border: none;
+  border-radius: 25px; /* Rounded corners for a modern look */
+  font-size: 1.2rem; /* Make button text readable */
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Button animation */
+}
+
+.cta-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.1); /* Slightly enlarge button on hover */
+}
+
+/* Form Styles */
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block; /* Place label above input */
+  margin-bottom: 8px;
+}
+
+input {
+  margin-bottom: 12px;
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: darkblue;
+}
+
+/* Content Wrapper */
+main {
+  margin-top: 80px; /* Prevent content from overlapping the fixed navbar */
+}
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column; /* Stack navbar links vertically */
+    align-items: center; /* Center align the links */
+  }
+
+  .hero h1 {
+    font-size: 2.5rem; /* Smaller headline on mobile */
+  }
+
+  .hero p {
+    font-size: 1.2rem; /* Adjust text size on mobile */
+  }
+
+  .cta-button {
+    font-size: 1rem; /* Smaller button on mobile */
+    padding: 10px 20px;
+  }
+}

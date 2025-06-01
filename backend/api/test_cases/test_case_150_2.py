@@ -1,0 +1,3 @@
+import unittest
+from selenium import webdriver
+# ... (Selenium script using webdriver.Chrome and unittest to locate and delete a file. Requires locators for elements) ...

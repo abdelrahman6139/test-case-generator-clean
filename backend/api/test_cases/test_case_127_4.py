@@ -1,0 +1,1 @@
+This field requires a more complete framework. See NFT-SCAL-003 for explanation.  This likely needs sophisticated load testing tools.

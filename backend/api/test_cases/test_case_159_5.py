@@ -1,0 +1,1 @@
+import unittest; class TestPassFailRatio(unittest.TestCase): def test_pass(self): pass; def test_fail(self): self.fail('Intentional Fail'); if __name__ == '__main__': unittest.main()

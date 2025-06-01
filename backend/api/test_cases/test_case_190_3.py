@@ -1,0 +1,9 @@
+import unittest
+from selenium import webdriver
+
+class TestLogin(unittest.TestCase):
+    # ... (setUp and tearDown methods same as TC_Login_001) ...
+    def test_multiple_failed_attempts(self):
+        # ... (Code to enter invalid credentials multiple times) ...
+        # ... (Code to enter valid credentials and login) ...
+        self.assertIn('home_page_url', self.driver.current_url)

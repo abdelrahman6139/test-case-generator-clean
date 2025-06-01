@@ -1,0 +1,1 @@
+This field requires a more complete framework. See NFT-SCAL-001 for explanation.

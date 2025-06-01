@@ -1,0 +1,1 @@
+This test case does not require Selenium. CPU usage will be monitored programmatically.

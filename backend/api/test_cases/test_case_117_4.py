@@ -1,0 +1,1 @@
+This test case does not require Selenium. Memory usage will be monitored programmatically.

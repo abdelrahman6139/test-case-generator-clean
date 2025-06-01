@@ -1,0 +1,1 @@
+This field requires a more complete framework.  This would need a multi-threaded/multi-process Selenium approach and likely involve external load testing tools beyond the scope of a simple JSON test case.

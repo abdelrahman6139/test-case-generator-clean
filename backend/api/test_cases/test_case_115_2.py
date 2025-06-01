@@ -1,0 +1,1 @@
+This test case does not require Selenium. Time measurement will be done programmatically.

@@ -1,0 +1,3 @@
+import unittest
+from selenium import webdriver
+# ... (Selenium script using webdriver.Chrome and unittest to view requirement details. Requires locators) ...
