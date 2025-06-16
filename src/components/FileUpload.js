@@ -81,27 +81,23 @@ const FileUpload = () => {
         script: code,
         index: key
       });
-  
+
+      const result = response.data?.result || "failed";
       const stdout = response.data?.stdout || "";
-      const passed = stdout.includes("1 passed") || /==+\s*\d+\s+passed\s+in\s+/i.test(stdout);
-  
-      const result = response.data?.result || (passed ? "passed" : "failed");
-  
+
       setRunStatus(prev => ({ ...prev, [key]: result }));
-  
+
       if (!stdout.trim()) {
         alert("⚠️ Script executed but response incomplete.");
       }
-  
+
     } catch (error) {
       console.error("Script run error:", error);
       setRunStatus(prev => ({ ...prev, [key]: "failed" }));
-      alert('⚠️ Script executed but result unclear (check log).');
+      alert('⚠️ Script execution failed.');
     }
   };
-  
-  
-  
+
   const handleViewLastResult = async (reqIndex, scriptIndex) => {
     const key = `${reqIndex}_${scriptIndex}`;
     try {
