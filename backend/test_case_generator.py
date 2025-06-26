@@ -14,6 +14,13 @@ import platform
 
 
 load_dotenv()
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+
+client = MongoClient(os.getenv("MONGO_URI"))
+db = client["mydatabase"]  # نفس اسم الداتابيز اللي في URI
+history_collection = db["test_history"]  # اسم الكولكشن الجديد لحفظ التستات
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
@@ -128,14 +135,31 @@ Now generate between 5 and 10 test cases for this requirement:
         for i, tc in enumerate(parsed):
             script = tc.get("selenium_script", "")
             if "assert" not in script:
-                continue  # ⛔ skip scripts without assertions
+                continue
 
             filename = f"test_case_{len(os.listdir(TEST_CASE_DIR)) + 1}_{i+1}.py"
             path = os.path.join(TEST_CASE_DIR, filename)
             with open(path, 'w', encoding='utf-8') as f:
                 f.write(script)
-            tc["script_filename"] = filename
+
+            # ✅ Save to MongoDB
+            test_doc = {
+                "requirement": requirement,
+                "script_filename": filename,
+                "selenium_script": script,
+                "status": "not_run",
+                "userId": data.get("user_id"),
+                "created_at": time.time()
+            }
+
+            inserted = history_collection.insert_one(test_doc)
+            tc["_id"] = str(inserted.inserted_id)
+
             saved_files.append(filename)
+
+
+
+             
 
         return jsonify({
             "message": "Test cases generated and saved",
@@ -178,12 +202,31 @@ def run_custom_script():
     failed = "failed" in stdout_lower or "error" in stdout_lower or "exception" in stderr_lower
     passed = "1 passed" in stdout_lower and not failed
 
+    # ✅ Update test history in MongoDB
+    if index:
+        try:
+            _id = ObjectId(index)
+            history_collection.update_one(
+                {"_id": _id},
+                {
+                    "$set": {
+                        "status": "passed" if passed else "failed",
+                        "stdout": result.stdout,
+                        "stderr": result.stderr,
+                        "executed_at": time.time()
+                    }
+                }
+            )
+        except Exception as e:
+            print("⛔ Failed to update MongoDB history:", e)
+
     return jsonify({
         "message": "✅ Script passed" if passed else "❌ Script failed",
         "result": "passed" if passed else "failed",
         "stdout": result.stdout,
         "stderr": result.stderr
     }), 200
+
 
 @app.route('/test_result_log', methods=['GET'])
 def test_result_log():
@@ -219,6 +262,31 @@ def show_report():
     except Exception as e:
         return jsonify({"error": f"Allure failed: {str(e)}"}), 500
 
+@app.route("/get_history", methods=["GET"])
+def get_history():
+    user_id = request.args.get("userId")
+    try:
+        # بدل ObjectId(user_id) بـ user_id لأنك بتخزنها كنص
+        records = list(history_collection.find({"userId": user_id}))
+        for r in records:
+            r["_id"] = str(r["_id"])
+            r["userId"] = str(r["userId"])
+        return jsonify(records), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route("/delete_history", methods=["DELETE"])
+def delete_history():
+    history_id = request.args.get("id")
+    if not history_id:
+        return jsonify({"error": "Missing ID"}), 400
+    try:
+        result = history_collection.delete_one({"_id": ObjectId(history_id)})
+        return jsonify({"message": "Deleted", "deleted": result.deleted_count}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500    
+    
+    
 
 if __name__ == '__main__':
     # Clean Allure results once on server startup

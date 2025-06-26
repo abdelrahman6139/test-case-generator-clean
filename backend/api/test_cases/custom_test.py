@@ -1,18 +1,23 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import time
 
-class TestLoginInvalid(unittest.TestCase):
+class TestLoginFunctionality(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
 
-    def test_invalid_login(self):
-        self.driver.get("https://the-internet.herokuapp.com/login")
-        self.driver.find_element(By.ID, "username").send_keys("tomsmith")
-        self.driver.find_element(By.ID, "password").send_keys("WrongPassword")
-        self.driver.find_element(By.CSS_SELECTOR, "button.radius").click()
-        success_msg = self.driver.find_element(By.ID, "flash").text
-        self.assertIn("You logged into a secure area!", success_msg)  # Designed to fail
+    def test_valid_login(self):
+        self.driver.get("http://localhost:3000/login")
+        time.sleep(2)
+
+        self.driver.find_element(By.NAME, "email").send_keys("testuser@example.com")
+        self.driver.find_element(By.NAME, "password").send_keys("Test123456")
+        self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+        time.sleep(3)
+
+        # ✅ تحقق من التحويل إلى /upload أو أي صفحة بعد تسجيل الدخول
+        self.assertIn("upload", self.driver.current_url)
 
     def tearDown(self):
         self.driver.quit()

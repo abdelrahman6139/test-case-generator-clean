@@ -18,10 +18,10 @@ const Login = () => {
     try {
       const response = await api.post('/login', formData);
 
-      // حفظ التوكن والمستخدم
+      // حفظ التوكن وكامل بيانات المستخدم
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
       window.location.href = "/upload";
-      localStorage.setItem('user', JSON.stringify({ email: formData.email }));
 
       setSuccessMessage('✅ Login successful');
       setFormData({ email: '', password: '' });

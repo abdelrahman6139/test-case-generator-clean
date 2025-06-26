@@ -15,6 +15,8 @@ const FileUpload = () => {
   const [lastLogs, setLastLogs] = useState({});
   const [runStatus, setRunStatus] = useState({});
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -50,6 +52,7 @@ const FileUpload = () => {
     try {
       const response = await axios.post('http://localhost:5001/generate_test_case', {
         requirement: requirements[index].sentence || requirements[index],
+        user_id: user?._id
       });
 
       const parsedCases = response.data.test_cases || [];
@@ -79,7 +82,7 @@ const FileUpload = () => {
     try {
       const response = await axios.post('http://localhost:5001/run_custom_script', {
         script: code,
-        index: key
+        index: testCases[reqIndex]?.[scriptIndex]?._id || key
       });
 
       const result = response.data?.result || "failed";

@@ -6,10 +6,20 @@ import Login from './components/login';
 import Register from './components/register';
 import FileUpload from './components/FileUpload';
 import ProtectedRoute from './components/ProtectedRoute';
+import History from './components/History'; // ✅ Added
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
+  let user = {};
+  try {
+    user = JSON.parse(localStorage.getItem('user') || '{}');
+  } catch (error) {
+    console.error("Invalid user JSON in localStorage", error);
+    user = {};
+  }
+
   return (
     <Router>
       <NavigationBar />
@@ -26,6 +36,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute>
+                <History userId={user?._id} />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Container>
     </Router>
@@ -35,7 +53,13 @@ function App() {
 const NavigationBar = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  let user = {};
+  try {
+    user = JSON.parse(localStorage.getItem('user') || '{}');
+  } catch (error) {
+    console.error("Invalid user JSON in localStorage", error);
+    user = {};
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -52,7 +76,9 @@ const NavigationBar = () => {
           <Nav className="ms-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/upload">Upload SRS</Nav.Link>
-
+            {token && (
+              <Nav.Link as={Link} to="/history">📜 History</Nav.Link> // ✅ Added
+            )}
             {token ? (
               <>
                 <Nav.Link disabled style={{ color: '#0f0' }}>

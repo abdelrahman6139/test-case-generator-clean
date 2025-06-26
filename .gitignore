@@ -4,7 +4,8 @@
 
 # Allure results & large output
 /backend/api/results
-/backend/api/final_model/model.safetensors
+/backend/api/test_cases
+
 
 # Python cache
 __pycache__/
